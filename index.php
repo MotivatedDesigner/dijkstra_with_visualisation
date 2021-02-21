@@ -39,7 +39,7 @@ while ( !$Q->isEmpty() )
     // mark the node as visited
     $visited[$minEntry['data']] = true;
     // check if the distance of the node is less than the one from the queue
-    if ( ( - $minEntry['priority'] ) > $dist[$minEntry['data']]) {echo 'First continue'; continue;}
+    if ( ( - $minEntry['priority'] ) > $dist[$minEntry['data']]) continue;
     // loop through adjacent nodes
     foreach ($graph[$minEntry['data']] as $adjs => $weight) 
     {
@@ -51,11 +51,28 @@ while ( !$Q->isEmpty() )
       if ($newDist < $dist[$adjs]) 
       {
         $dist[$adjs] = $newDist;
+        $prev[$adjs] = $minEntry['data'];
         $Q->insert($adjs,-$newDist);
       }
     }
 }
 
 print_r($dist);
+echo '<br>';
+print_r($prev);
+$pointer = 'C';
+$stack = new SplStack();
+
+while (true) {
+  $stack->push($pointer);
+  $pointer = $prev[$pointer];
+  if ($pointer == '') break;
+}
+echo '<br>';
+
+while (!$stack->isEmpty()) {
+  echo ' => ';
+  echo $stack->pop();
+}
 
 ?>
