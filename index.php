@@ -18,11 +18,22 @@ $dist = array();
 $prev = array();
 // queue of all unoptimized nodes
 $Q = new SplPriorityQueue();
+// setting the queue to return both key & value whene using extract method
+$Q->setExtractFlags(SplPriorityQueue::EXTR_BOTH);
 
 foreach ($graph as $node => $adjs) {
   $visited[$node] = false; // mark all nodes as not visited
   $dist[$node] = INF; // set initial distance to "infinity"
   $prev[$node] = null; // no known previeus node yet
+}
+
+// choosing node A as starting node (only for test, this will be choosed by the user later)
+$dist['A'] = 0;
+$Q->insert('A',0);
+
+while ( !$Q->isEmpty() ) {
+    $minEntry = $Q->extract();
+    print_r($minEntry);
 }
 
 ?>
