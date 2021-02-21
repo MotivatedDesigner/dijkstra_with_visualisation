@@ -10,4 +10,19 @@ $graph = array(
   'F' => array('A' => -6, 'C' => -3, 'D' => -2, 'E' => -5),
 );
 
+// array of visited nodes
+$visited = array();
+// array of best distance from the start node to other nodes
+$dist = array();
+// array of previeus vertex for each node
+$prev = array();
+// queue of all unoptimized nodes
+$Q = new SplPriorityQueue();
+
+foreach ($graph as $node => $adjs) {
+  $visited[$node] = false; // mark all nodes as not visited
+  $dist[$node] = INF; // set initial distance to "infinity"
+  $prev[$node] = null; // no known previeus node yet
+}
+
 ?>
