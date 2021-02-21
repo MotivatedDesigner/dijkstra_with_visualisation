@@ -31,9 +31,31 @@ foreach ($graph as $node => $adjs) {
 $dist['A'] = 0;
 $Q->insert('A',0);
 
-while ( !$Q->isEmpty() ) {
+// visite all node with while loop
+while ( !$Q->isEmpty() ) 
+{
+    // extract the node with min distance from the start node
     $minEntry = $Q->extract();
-    print_r($minEntry);
+    // mark the node as visited
+    $visited[$minEntry['data']] = true;
+    // check if the distance of the node is less than the one from the queue
+    if ( ( - $minEntry['priority'] ) > $dist[$minEntry['data']]) {echo 'First continue'; continue;}
+    // loop through adjacent nodes
+    foreach ($graph[$minEntry['data']] as $adjs => $weight) 
+    {
+      // if the node is alredy visited skip this round of iteration
+      if ($visited[$adjs]) continue;
+      // calculate the new dist (subtracting is used because the weight is negative)
+      $newDist = $dist[$minEntry['data']] - $weight;
+      // check if the new dist is less than the current distance
+      if ($newDist < $dist[$adjs]) 
+      {
+        $dist[$adjs] = $newDist;
+        $Q->insert($adjs,-$newDist);
+      }
+    }
 }
+
+print_r($dist);
 
 ?>
